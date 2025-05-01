@@ -2,22 +2,20 @@ import os
 import sys
 import shutil
 
-def collect_file_dirrs(in_dirr, out_dirr, max_depth=None):
+def gather_dirrs(in_dirr, out_dirr, max_depth=None):
     if not os.path.isdir(in_dirr):
         sys.exit(0)
 
-    for root, dirs, files in os.walk(in_dirr):
+    for rt, dirs, files in os.walk(in_dirr):
         for file in files:
-            src = os.path.join(root, file)
-            rel_path = os.path.relpath(src, in_dirr)
-            parts = rel_path.split(os.sep)
+            src = os.path.join(rt, file)
+            rel_pt = os.path.relpath(src, in_dirr)
+            path_parts = rel_pt.split(os.sep)
 
             if max_depth is not None:
-                if max_depth <= 1:
-                    aim_parts = [file]
-                else:
-                    aim_parts = parts[-(max_depth - 1):]
-                dst = os.path.join(out_dirr, *aim_parts)
+
+                aim_marks = path_parts[-(max_depth - 1):] if max_depth > 1 else [file]
+                dst = os.path.join(out_dirr, *aim_marks)
             else:
                 dst = os.path.join(out_dirr, file)
                 name, ext = os.path.splitext(file)
@@ -36,7 +34,6 @@ if __name__ == "__main__":
     in_dirr = sys.argv[1]
     out_dirr = sys.argv[2]
     max_depth = None
-
     if "--max_depth" in sys.argv:
         try:
             idx = sys.argv.index("--max_depth")
@@ -45,4 +42,4 @@ if __name__ == "__main__":
         except:
             pass
 
-    collect_file_dirrs(in_dirr, out_dirr, max_depth)
+    gather_dirrs(in_dirr, out_dirr, max_depth)
