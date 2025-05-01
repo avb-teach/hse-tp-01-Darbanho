@@ -14,10 +14,10 @@ def collect_file_dirrs(in_dirr, out_dirr, max_depth=None):
 
             if max_depth is not None:
                 if max_depth <= 1:
-                    trimmed_parts = [file]
+                    aim_parts = [file]
                 else:
-                    trimmed_parts = parts[-(max_depth - 1):]
-                dst = os.path.join(out_dirr, *trimmed_parts)
+                    aim_parts = parts[-(max_depth - 1):]
+                dst = os.path.join(out_dirr, *aim_parts)
             else:
                 dst = os.path.join(out_dirr, file)
                 name, ext = os.path.splitext(file)
