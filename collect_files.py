@@ -20,11 +20,12 @@ if __name__ == "__main__":
     depth = 1
     params = sys.argv[1:]
 
-    if len(params) > 2:
+    if "--max_depth" in params:
         try:
-            depth = int(params[-1])
-            params = params[:-1]
-        except ValueError:
+            idx = params.index("--max_depth")
+            depth = int(params[idx + 1])
+            params = params[:idx]
+        except:
             sys.exit(1)
 
     if len(params) != 2:
@@ -34,6 +35,5 @@ if __name__ == "__main__":
         sys.exit(1)
 
     gather_files(in_dirr, out_dirr, depth)
-
 
 
